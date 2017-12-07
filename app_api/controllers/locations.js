@@ -1,5 +1,24 @@
-module.exports.locationsByDistance = function (req, res) {};
-module.exports.createLocation = function (req, res) {};
-module.exports.readLocation = function (req, res) {};
-module.exports.updateLocation = function (req, res) {};
-module.exports.deleteLocation = function (req, res) {};
+module.exports.locationsByDistance = function (req, res) {
+  res.status(200);
+  res.json({status: 'success'});
+};
+
+module.exports.createLocation = function (req, res) {
+  res.status(200);
+  res.json({status: 'success'});
+};
+
+module.exports.readLocation = function (req, res) {
+  res.status(200);
+  res.json({status: 'success'});
+};
+
+module.exports.updateLocation = function (req, res) {
+  res.status(200);
+  res.json({status: 'success'});
+};
+
+module.exports.deleteLocation = function (req, res) {
+  res.status(200);
+  res.json({status: 'success'});
+};
