@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const Location = mongoose.model('location');
+
 module.exports.createReview = function (req, res) {
   res.status(200);
   res.json({status: 'success'});
