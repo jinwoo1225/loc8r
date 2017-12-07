@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dbURI = 'mongodb://admin:fugger express@localhost/loc8r?authSource=admin';
+const dbURI = 'mongodb://loc8r:fugger-express@localhost/loc8r?authSource=loc8r';
 
 mongoose.connect(dbURI, {
   useMongoClient: true
