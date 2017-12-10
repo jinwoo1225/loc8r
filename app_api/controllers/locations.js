@@ -23,7 +23,8 @@ const getOpeningTimes = function (body) {
   const openingTimes = [];
 
   for (let i = 0; i < 7; i++) {
-    if (body['days' + i] && body['opening' + i] && body['closing' + i] && body['closed' + i]) {
+    if (body['days' + i] && body['closed' + i]) {
+      // undefined opening and closing when site is closed is not an issue
       openingTimes.push({
         days: body['days' + i],
         opening: body['opening' + i],
