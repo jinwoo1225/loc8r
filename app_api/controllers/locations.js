@@ -72,10 +72,10 @@ module.exports.locationsByDistance = function (req, res) {
           facilities: doc.obj.facilities,
           _id: doc.obj._id
         });
-
-        res.status(200);
-        res.json(locations);
       });
+      
+      res.status(200);
+      res.json(locations);
     }
   });
 };
