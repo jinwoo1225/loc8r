@@ -88,7 +88,7 @@ module.exports.createLocation = function (req, res) {
     address: req.body.address,
     facilities: req.body.facilities.split(','),
     coords: [parseFloat(req.body.lng), parseFloat(req.body.lat)],
-    openingTimes: openingTimes}
+    openingTimes: openingTimes},
     function (err, location) {
       if (err) {
         res.status(400);
