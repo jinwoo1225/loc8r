@@ -158,6 +158,23 @@ module.exports.updateLocation = function (req, res) {
 };
 
 module.exports.deleteLocation = function (req, res) {
-  res.status(200);
-  res.json({status: 'success'});
+  const locationId = req.params.locationId;
+
+  if (locationId) {
+    Location
+      .findByIdAndRemove(locationId)
+      .exec(function (err, location) {
+        if (err) {
+          res.status(404);
+          res.json(err);
+          return;
+        }
+
+        res.status(204);
+        res.json(null);
+      });
+  } else {
+    res.status(404);
+    res.json({message: 'No locationId'});
+  }
 };
