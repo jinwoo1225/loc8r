@@ -119,8 +119,42 @@ module.exports.readLocation = function (req, res) {
 };
 
 module.exports.updateLocation = function (req, res) {
-  res.status(200);
-  res.json({status: 'success'});
+  if (!req.params.locationId) {
+    res.status(404);
+    res.json({message: 'Not found; locationId is required'});
+    return;
+  }
+
+  Location
+    .findById(req.params.locationId)
+    .select('-reviews -ratings')
+    .exec(function (err, location) {
+      if (!location) {
+        res.status(404);
+        res.json({message: 'locationId not found'});
+        return;
+      } else if (err) {
+        res.status(400);
+        res.json(err);
+        return;
+      }
+
+      location.name = req.body.name;
+      location.address = req.body.address;
+      location.facilities = req.body.facilities.split(',');
+      location.coords = [parseFloat(req.body.lng), parseFloat(req.body.lat)];
+      location.openingTimes = getOpeningTimes(req.body);
+
+      location.save(function (err, location) {
+        if (err) {
+          res.status(404);
+          res.json(err);
+        } else {
+          res.status(200);
+          res.json(location);
+        }
+      });
+    });
 };
 
 module.exports.deleteLocation = function (req, res) {
