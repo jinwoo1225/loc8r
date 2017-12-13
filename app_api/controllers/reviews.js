@@ -98,7 +98,7 @@ module.exports.readReview = function (req, res) {
           res.json({message: 'locationId not found'});
           return;
         } else if (err) {
-          res.status(404);
+          res.status(400);
           res.json(err);
           return;
         }
@@ -133,11 +133,96 @@ module.exports.readReview = function (req, res) {
 };
 
 module.exports.updateReview = function (req, res) {
-  res.status(200);
-  res.json({status: 'success'});
+  if (!req.params.locationId || !req.params.reviewId) {
+    res.status(404);
+    res.json({message: 'Not found, locationid and reviewid are both required.'});
+    return;
+  }
+
+  Location
+    .findById(req.params.locationId)
+    .select('reviews')
+    .exec(function (err, location) {
+      if (!location) {
+        res.status(404);
+        res.json({message: 'locationId not found'});
+        return;
+      } else if (err) {
+        res.status(400);
+        res.json(err);
+        return;
+      }
+
+      if (location.reviews && location.reviews.length > 0) {
+        const thisReview = location.reviews.id(req.params.reviewId);
+
+        if (!thisReview) {
+          res.status(404);
+          res.json({message: 'reviewId not found'});
+        } else {
+          thisReview.author = req.body.author;
+          thisReview.rating = req.body.rating;
+          thisReview.reviewText = req.body.reviewText;
+
+          location.save(function (err, location) {
+            if (err) {
+              res.status(404);
+              res.json(err);
+            } else {
+              updateAverageRating(location._id);
+              res.status(200);
+              res.json(thisReview);
+            }
+          });
+        }
+      } else {
+        res.status(404);
+        res.json({message: 'No review to update'});
+      }
+    });
 };
 
 module.exports.deleteReview = function (req, res) {
-  res.status(200);
-  res.json({status: 'success'});
+  if (!req.params.locationId || !req.params.reviewId) {
+    res.status(404);
+    res.json({message: 'Not found; locationId and reviewId are both required'});
+    return;
+  }
+
+  Location
+    .findById(req.params.locationId)
+    .select('reviews')
+    .exec(function (err, location) {
+      if (!location) {
+        res.status(404);
+        res.json({message: 'locationId not found'});
+        return;
+      } else if (err) {
+        res.staus(400);
+        res.json(err);
+        return;
+      }
+
+      if (location.reviews && location.reviews.length > 0) {
+        if (!location.reviews.id(req.params.reviewId)) {
+          res.status(404);
+          res.json({message: 'reviewId not found'});
+        } else {
+          location.reviews.id(req.params.reviewId).remove();
+          location.save(function (err) {
+            if (err) {
+              res.status(404);
+              res.json(err);
+            } else {
+              updateAverageRating(location._id);
+              res.status(204);
+              res.json(null);
+            }
+          });
+        }
+      } else {
+        res.status(404);
+        res.json({message: 'No review to delete'});
+      }
+    });
 };
