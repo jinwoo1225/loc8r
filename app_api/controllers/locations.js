@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
 
+// vvv This stuff is now irrelevant
+
+/*
 const theEarth = (function () {
   const earthRadius = 6371; // km
 
@@ -16,7 +19,7 @@ const theEarth = (function () {
     getDistanceFromRads: getDistanceFromRads,
     getRadsFromDistance: getRadsFromDistance
   };
-})();
+})(); */
 
 // allow up to seven opening times for each day of the week
 const getOpeningTimes = function (body) {
@@ -48,7 +51,7 @@ module.exports.locationsByDistance = function (req, res) {
   const geoOptions = {
     spherical: true,
     num: 10,
-    maxDistance: theEarth.getRadsFromDistance(maxDistance)
+    maxDistance: maxDistance * 1000 // convert km to m
   };
 
   if (!lng || !lat) {
@@ -66,7 +69,7 @@ module.exports.locationsByDistance = function (req, res) {
     } else {
       results.forEach(function (doc) {
         locations.push({
-          distance: theEarth.getDistanceFromRads(doc.dis),
+          distance: doc.dis / 1000, // convert m back to km
           name: doc.obj.name,
           address: doc.obj.address,
           rating: doc.obj.rating,
