@@ -19,7 +19,7 @@ block content
             .panel-body
               each time in location.openingTimes
                 p
-                  | #{time.days}:
+                  | #{time.days}:&nbsp;
                   if time.closed
                     | closed
                   else
@@ -53,7 +53,7 @@ block content
                       span.rating
                         +outputRating(review.rating)
                       span.review-author= review.author
-                      small.review-timestamp= review.timestamp
+                      small.review-timestamp= review.createdOn
                     .col-xs-12
                       p!= review.reviewText.replace(/\n/g, '<br/>')
     .col-xs-12.col-md-3
