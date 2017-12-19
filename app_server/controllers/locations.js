@@ -17,6 +17,24 @@ const formatDistance = function (distance) {
   return `${roundedDistance} ${unit}`;
 };
 
+const _showError = function (req, res, status) {
+  let title, content;
+
+  if (status === 404) {
+    title = '404: Page Not Found';
+    content = 'Oh dear. Looks like we can\'t find this page. Sorry.';
+  } else {
+    title = `${status}: Something's Gone Wrong`;
+    content = 'Something, somewhere, has gone just a little bit wrong.';
+  }
+
+  res.status(status);
+  res.render('generic-text', {
+    title: title,
+    content: content
+  });
+};
+
 const renderHomePage = function (req, res, body) {
   let message;
 
@@ -39,6 +57,18 @@ const renderHomePage = function (req, res, body) {
   });
 };
 
+const renderLocationPage = function (req, res, body) {
+  res.render('location-info', {
+    title: body.name,
+    pageHeader: {title: body.name},
+    sidebar: {
+      context: 'is on Loc8r because it has accessible Wi-Fi and space to sit down with your laptop and get some work done.',
+      callToAction: 'If you\'ve been here and you like it—or if you don\'t—please leave a review to help other people just like you.'
+    },
+    location: body
+  });
+};
+
 module.exports.homeList = function (req, res) {
   const path = '/api/locations';
   const requestOptions = {
@@ -53,7 +83,7 @@ module.exports.homeList = function (req, res) {
   };
 
   request(requestOptions, function (err, response, body) {
-    if (response.statusCode == 200 && body.length !== 0) {
+    if (response.statusCode === 200 && body.length !== 0) {
       for (let i = 0; i < body.length; i++) {
         body[i].distance = formatDistance(body[i].distance);
       }
@@ -64,51 +94,19 @@ module.exports.homeList = function (req, res) {
 };
 
 module.exports.locationInfo = function (req, res) {
-  res.render('location-info', {
-    title: 'Location Info',
-    pageHeader: {title: 'Starcups'},
-    sidebar: {
-      context: 'is on Loc8r because it has accessible Wi-Fi and space to sit down with your laptop and get some work done.',
-      callToAction: 'If you\'ve been here and you like it—or if you don\'t—please leave a review to help other people just like you.'
-    },
-    location: {
-      name: 'Starcups',
-      address: '125 High Street, Reading, RG6 1PS',
-      rating: 3,
-      facilities: ['Hot Drinks', 'Food', 'Premium Wi-Fi'],
-      coords: {lat: 51.455041, lng: -0.9690884},
-      openingTimes: [
-        {
-          days: 'Monday - Friday',
-          opening: '7:00 am',
-          closing: '7:00 pm',
-          closed: false
-        },
-        {
-          days: 'Saturday',
-          opening: '8:00 am',
-          closing: '5:00 pm',
-          closed: false
-        },
-        {
-          days: 'Sunday',
-          closed: true
-        }
-      ],
-      reviews: [
-        {
-          author: 'Simon Holmes',
-          rating: 5,
-          timestamp: '16 July 2013',
-          reviewText: 'What a great place! I can\'t say enough good things about it.'
-        },
-        {
-          author: 'Charlie Chaplin',
-          rating: 3,
-          timeStamp: '16 June 2013',
-          reviewText: 'It was OK. Coffee wasn\'t great, but the Wi-Fi was fast.'
-        }
-      ]
+  const path = '/api/locations/' + req.params.locationId;
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: 'GET',
+    json: {},
+  };
+
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 200) {
+      body.coords = {lng: body.coords[0], lat: body.coords[1]};
+      renderLocationPage(req, res, body);
+    } else {
+      _showError(req, res, response.statusCode);
     }
   });
 };
