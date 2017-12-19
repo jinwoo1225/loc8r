@@ -54,7 +54,7 @@ module.exports.locationsByDistance = function (req, res) {
     maxDistance: maxDistance * 1000 // convert km to m
   };
 
-  if (!lng || !lat) {
+  if ((!lng && lng !== 0) || (!lat && lat !== 0)) {
     res.status(404);
     res.json('lng and lat query parameters are both required');
     return;
