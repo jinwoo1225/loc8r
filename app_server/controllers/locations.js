@@ -124,13 +124,13 @@ module.exports.locationInfo = function (req, res) {
   });
 };
 
-module.exports.addReview = function (req, res) {
+module.exports.addReviewGet = function (req, res) {
   getLocationInfo(req, res, function (req, res, body) {
     renderReviewForm(req, res, body);
   });
 };
 
-module.exports.doAddReview = function (req, res) {
+module.exports.addReviewPost = function (req, res) {
   const locationId = req.params.locationId;
   const path = '/api/locations/' + locationId + '/reviews';
   const postData = {
