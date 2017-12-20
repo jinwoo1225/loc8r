@@ -54,6 +54,19 @@ const getLocationInfo = function (req, res, callback) {
 };
 
 const renderHomePage = function (req, res, body) {
+  let message;
+
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 200) {
+      body.coords = {lng: body.coords[0], lat: body.coords[1]};
+      callback(req, res, body);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
+};
+
+const renderHomePage = function (req, res, body) {
   res.render('location-list', {
     title: 'Loc8r - Find a Place to Work with Wi-Fi',
     pageHeader: {
