@@ -35,6 +35,24 @@ const _showError = function (req, res, status) {
   });
 };
 
+const getLocationInfo = function (req, res, callback) {
+  const path = '/api/locations/' + req.params.locationId;
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: 'GET',
+    json: {},
+  };
+
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 200) {
+      body.coords = {lng: body.coords[0], lat: body.coords[1]};
+      callback(req, res, body);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
+};
+
 const renderHomePage = function (req, res, body) {
   let message;
 
@@ -69,6 +87,13 @@ const renderLocationPage = function (req, res, body) {
   });
 };
 
+const renderReviewForm = function (req, res, body) {
+  res.render('location-review-form', {
+    title: `Review ${body.name} on Loc8r`,
+    pageHeader: {title: `Review ${body.name}`}
+  });
+};
+
 module.exports.homeList = function (req, res) {
   const path = '/api/locations';
   const requestOptions = {
@@ -94,26 +119,16 @@ module.exports.homeList = function (req, res) {
 };
 
 module.exports.locationInfo = function (req, res) {
-  const path = '/api/locations/' + req.params.locationId;
-  const requestOptions = {
-    url: apiOptions.server + path,
-    method: 'GET',
-    json: {},
-  };
-
-  request(requestOptions, function (err, response, body) {
-    if (response.statusCode === 200) {
-      body.coords = {lng: body.coords[0], lat: body.coords[1]};
-      renderLocationPage(req, res, body);
-    } else {
-      _showError(req, res, response.statusCode);
-    }
+  getLocationInfo(req, res, function (req, res, body) {
+    renderLocationPage(req, res, body);
   });
 };
 
 module.exports.addReview = function (req, res) {
-  res.render('location-review-form', {
-    title: 'Review Starcups on Loc8r',
-    pageHeader: {title: 'Review Starcups'}
+  getLocationInfo(req, res, function (req, res, body) {
+    renderReviewForm(req, res, body);
   });
+};
+
+module.exports.doAddReview = function (req, res) {
 };
