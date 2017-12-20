@@ -131,4 +131,24 @@ module.exports.addReview = function (req, res) {
 };
 
 module.exports.doAddReview = function (req, res) {
+  const locationId = req.params.locationId;
+  const path = '/api/locations/' + locationId + '/reviews';
+  const postData = {
+    author: req.body.name,
+    rating: parseInt(req.body.rating, 10),
+    reviewText: req.body.review
+  };
+  const requestOptions = {
+    url: apiOptions.server + path,
+    method: 'POST',
+    json: postData
+  };
+
+  request(requestOptions, function (err, response, body) {
+    if (response.statusCode === 201) {
+      res.redirect('/location/' + locationId);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
 };
