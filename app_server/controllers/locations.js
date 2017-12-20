@@ -90,7 +90,8 @@ const renderLocationPage = function (req, res, body) {
 const renderReviewForm = function (req, res, body) {
   res.render('location-review-form', {
     title: `Review ${body.name} on Loc8r`,
-    pageHeader: {title: `Review ${body.name}`}
+    pageHeader: {title: `Review ${body.name}`},
+    error: req.query.error
   });
 };
 
@@ -148,7 +149,7 @@ module.exports.addReviewPost = function (req, res) {
     if (response.statusCode === 201) {
       res.redirect('/location/' + locationId);
     } else if (response.statusCode === 400 && body.name && body.name === 'ValidationError') {
-      res.redirect('/location/' + locationId + '/reviews/new?err=val');
+      res.redirect('/location/' + locationId + '/reviews/new?error=validation');
     } else {
       console.log(body);
       _showError(req, res, response.statusCode);
