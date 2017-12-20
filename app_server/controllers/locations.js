@@ -147,7 +147,10 @@ module.exports.addReviewPost = function (req, res) {
   request(requestOptions, function (err, response, body) {
     if (response.statusCode === 201) {
       res.redirect('/location/' + locationId);
+    } else if (response.statusCode === 400 && body.name && body.name === 'ValidationError') {
+      res.redirect('/location/' + locationId + '/reviews/new?err=val');
     } else {
+      console.log(body);
       _showError(req, res, response.statusCode);
     }
   });
