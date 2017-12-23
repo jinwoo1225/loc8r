@@ -5,7 +5,7 @@ var locationListCtrl = function ($scope) {
     	'address': '125 High Street, Reading, RG6 1PS',
     	'rating': 3,
       'facilities': ['Hot Drinks', 'Food', 'Premium Wi-Fi'],
-      'distance': 14.6
+      'distance': 14.6,
       '_id': '5a27ab691c5e0a989c0634da'
     }, {
 	    'name': 'Café Hero',
@@ -18,12 +18,13 @@ var locationListCtrl = function ($scope) {
 	    'name': 'Burger Queen',
     	'address': '125 High Street, Reading, RG6 1PS',
     	'rating': 2,
-    	'facilities': ['Food', 'Premium Wi-Fi'],
+      'facilities': ['Food', 'Premium Wi-Fi'],
+      'distance': 14.6,
       '_id': '5a2ce5ae877c0bf8cdf47358'
     }]
   };
 };
 
 angular
-  .module('loc8r')
+  .module('loc8r', [])
   .controller('locationListCtrl', locationListCtrl);
