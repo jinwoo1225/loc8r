@@ -54,15 +54,6 @@ const getLocationInfo = function (req, res, callback) {
 };
 
 const renderHomePage = function (req, res, body) {
-  let message;
-
-  if (!(body instanceof Array)) {
-    message = 'API lookup error';
-    body = [];
-  } else if (body.length === 0) {
-    message = 'No places found nearby';
-  }
-
   res.render('locations-list', {
     title: 'Loc8r - Find a Place to Work with Wi-Fi',
     pageHeader: {
@@ -71,7 +62,6 @@ const renderHomePage = function (req, res, body) {
     },
     sidebar: 'Looking for Wi-Fi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you\'re looking for.',
     locations: body,
-    message: message
   });
 };
 
