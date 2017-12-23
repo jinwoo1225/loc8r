@@ -53,7 +53,7 @@ const getLocationInfo = function (req, res, callback) {
   });
 };
 
-const renderHomePage = function (req, res, body) {
+const renderHomePage = function (req, res) {
   res.render('location-list', {
     title: 'Loc8r - Find a Place to Work with Wi-Fi',
     pageHeader: {
