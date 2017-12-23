@@ -54,7 +54,7 @@ const getLocationInfo = function (req, res, callback) {
 };
 
 const renderHomePage = function (req, res, body) {
-  res.render('locations-list', {
+  res.render('location-list', {
     title: 'Loc8r - Find a Place to Work with Wi-Fi',
     pageHeader: {
       title: 'Loc8r',
