@@ -129,3 +129,6 @@ module.exports.addReview = function (req, res) {
     renderReviewForm(req, res, body);
   });
 };
+
+module.exports.doAddReview = function (req, res) {
+};
