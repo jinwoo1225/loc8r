@@ -10,9 +10,11 @@ block content
           small &nbsp;#{pageHeader.strapLine}
   .row
     .col-xs-12.col-sm-8(data-ng-controller='locationListCtrl')
+      label(for='filter') Filter Results:
+      input#filter(type='text', name='filter', ng-model='textFilter')
       .error {{message}}
       .row.list-group
-        .col-xs-12.list-group-item(data-ng-repeat='location in data.locations')
+        .col-xs-12.list-group-item(data-ng-repeat='location in data.locations | filter:textFilter')
           h4
             a(href='/location/{{location._id}}') {{location.name}}
             span 
