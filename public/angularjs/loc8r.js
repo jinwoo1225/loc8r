@@ -22,6 +22,15 @@ var formatDistance = function () {
   };
 };
 
+var ratingStars = function () {
+  return {
+    scope: {
+      thisRating: '=rating'
+    },
+    templateUrl: '/angularjs/rating-stars.html'
+  };
+};
+
 var locationListCtrl = function ($scope) {
   $scope.data = {
     locations: [{
@@ -52,4 +61,5 @@ var locationListCtrl = function ($scope) {
 angular
   .module('loc8r', [])
   .controller('locationListCtrl', locationListCtrl)
-  .filter('formatDistance', formatDistance);
+  .filter('formatDistance', formatDistance)
+  .directive('ratingStars', ratingStars);
