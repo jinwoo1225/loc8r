@@ -31,35 +31,25 @@ var ratingStars = function () {
   };
 };
 
-var locationListCtrl = function ($scope) {
-  $scope.data = {
-    locations: [{
-	    'name': 'Starcups',
-    	'address': '125 High Street, Reading, RG6 1PS',
-    	'rating': 3,
-      'facilities': ['Hot Drinks', 'Food', 'Premium Wi-Fi'],
-      'distance': 14.6,
-      '_id': '5a27ab691c5e0a989c0634da'
-    }, {
-	    'name': 'Café Hero',
-    	'address': '125 High Street, Reading, RG6 1PS',
-    	'rating': 4,
-      'facilities': ['Hot Drinks', 'Food', 'Premium Wi-Fi'],
-      'distance': 14.6,
-      '_id': '5a2cdcc9877c0bf8cdf47355'
-    }, {
-	    'name': 'Burger Queen',
-    	'address': '125 High Street, Reading, RG6 1PS',
-    	'rating': 2,
-      'facilities': ['Food', 'Premium Wi-Fi'],
-      'distance': 14.6,
-      '_id': '5a2ce5ae877c0bf8cdf47358'
-    }]
-  };
+var loc8rData = function ($http) {
+  return $http.get('/api/locations?lng=-0.79&lat=51.3&maxDistance=20');
+}
+
+var locationListCtrl = function ($scope, loc8rData) {
+  $scope.message = 'Searching for nearby places...';
+
+  loc8rData.success(function (data) {
+    $scope.message = data.length > 0 ? '' : 'No locations found';
+    $scope.data = { locations: data };
+  }).error(function (err) {
+    $scope.message = 'Sorry, something\'s gone wrong.';
+    console.log(err);
+  });
 };
 
 angular
   .module('loc8r', [])
   .controller('locationListCtrl', locationListCtrl)
   .filter('formatDistance', formatDistance)
-  .directive('ratingStars', ratingStars);
+  .directive('ratingStars', ratingStars)
+  .service('loc8rData', loc8rData);
