@@ -32,8 +32,8 @@ var ratingStars = function () {
 };
 
 var loc8rData = function ($http) {
-  return $http.get('/api/locations?lng=-0.79&lat=51.3&maxDistance=20');
-}
+  return $http.get('/api/locations?lng=-0.79&lat=51.3&maxDistance=25');
+};
 
 var locationListCtrl = function ($scope, loc8rData) {
   $scope.message = 'Searching for nearby places...';
