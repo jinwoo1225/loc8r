@@ -38,10 +38,12 @@ var loc8rData = function ($http) {
 var locationListCtrl = function ($scope, loc8rData) {
   $scope.message = 'Searching for nearby places...';
 
-  loc8rData.success(function (data) {
+  console.log(loc8rData);
+
+  loc8rData.then(function (data) {
     $scope.message = data.length > 0 ? '' : 'No locations found';
     $scope.data = { locations: data };
-  }).error(function (err) {
+  }, function (err) {
     $scope.message = 'Sorry, something\'s gone wrong.';
     console.log(err);
   });
