@@ -37,5 +37,14 @@ mongorestore -h localhost -d loc8r -u admin -p --authenticationDatabase admin mo
 After all this is said and done, it should be possible to start the app by
 doing `npm start` in the root directory.
 
+There is one other snag. The application developed in the book features
+geolocation. The locations in the database are all in the United Kingdom. I
+have decided to keep things that way rather than broadcast where I live on
+here. In `public/angularjs/loc8r.js`, in the function `locationListCtrl`, it
+should very obvious how I intentionally crippled geolocation and how to turn it
+back on again. If you do this, of course, you will most likely have to change
+the database, unless you live within 25 km of 51.3° N 0.79° W. I'll leave that
+as an exercise for the reader.
+
 I might consider trying to host this on Digital Ocean or AWS or something in
 the future but right now that isn't a priority.
