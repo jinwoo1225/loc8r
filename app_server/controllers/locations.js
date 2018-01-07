@@ -81,7 +81,8 @@ const renderReviewForm = function (req, res, body) {
   res.render('location-review-form', {
     title: `Review ${body.name} on Loc8r`,
     pageHeader: {title: `Review ${body.name}`},
-    error: req.query.error
+    error: req.query.error,
+    url: req.originalUrl
   });
 };
 
