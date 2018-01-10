@@ -20,7 +20,8 @@ html(ng-app='loc8r')
               a(href='/about/') About
 
     .container
-      block content
+      div(data-ng-view)
+        block content
 
       footer
         .row
