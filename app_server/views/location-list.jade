@@ -11,7 +11,7 @@ block content
   .row
     .col-xs-12.col-sm-8(data-ng-controller='locationListCtrl')
       label(for='filter') Filter Results:
-      input#filter(type='text', name='filter', ng-model='textFilter')
+      input#filter(type='text', name='filter', data-ng-model='textFilter')
       .error {{message}}
       .row.list-group
         .col-xs-12.list-group-item(data-ng-repeat='location in data.locations | filter:textFilter')
