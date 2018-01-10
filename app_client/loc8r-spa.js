@@ -1,7 +1,8 @@
 var config = function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'home/home.view.html'
+      templateUrl: 'home/home.view.html',
+      controller: 'homeCtrl'
     })
     .otherwise({redirectTo: '/'});
 };
