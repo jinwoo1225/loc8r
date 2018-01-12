@@ -29,11 +29,11 @@ const appClientFiles = [
 
 const uglified = uglifyJs.minify(appClientFiles, {compress: false});
 
-fs.writeFile('public/angularjs/loc8r.min.js', uglified.code, function (err) {
+fs.writeFile('public/angularjs/loc8r-spa.min.js', uglified.code, function (err) {
   if (err) {
     console.log(err);
   } else {
-    console.log('Script saved and generated: loc8r.min.js');
+    console.log('Script saved and generated: loc8r-spa.min.js');
   }
 });
 
