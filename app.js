@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 require('./app_api/models/db');
+const uglifyJs = require('uglify-js');
+const fs = require('fs');
 
 const routes = require('./app_server/routes/index');
 const routesApi = require('./app_api/routes/index');
@@ -15,6 +17,25 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');
+
+const appClientFiles = [
+  'app_client/loc8r-spa.js',
+  'app_client/home/home.controller.js',
+  'app_client/common/services/geolocation.service.js',
+  'app_client/common/services/loc8rData.service.js',
+  'app_client/common/filters/formatDistance.filter.js',
+  'app_client/common/directives/ratingStars/ratingStars.directive.js'
+];
+
+const uglified = uglifyJs.minify(appClientFiles, {compress: false});
+
+fs.writeFile('public/angularjs/loc8r.min.js', uglified.code, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Script saved and generated: loc8r.min.js');
+  }
+});
 
 app.use(favicon());
 app.use(logger('dev'));
