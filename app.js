@@ -27,7 +27,13 @@ const appClientFiles = [
   'app_client/common/directives/ratingStars/ratingStars.directive.js'
 ];
 
-const uglified = uglifyJs.minify(appClientFiles, {compress: false});
+const appClientCode = {};
+
+for (let file of appClientFiles) {
+  appClientCode[file] = fs.readFileSync(file, 'utf8');
+}
+
+const uglified = uglifyJs.minify(appClientCode, {compress: false});
 
 fs.writeFile('public/angularjs/loc8r-spa.min.js', uglified.code, function (err) {
   if (err) {
