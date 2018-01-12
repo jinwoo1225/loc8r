@@ -7,6 +7,8 @@
     };
   };
 
+  loc8rData.$inject = ['$http'];
+
   angular
     .module('loc8r')
     .service('loc8rData', loc8rData);
