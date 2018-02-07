@@ -21,6 +21,7 @@ app.set('view engine', 'jade');
 const appClientFiles = [
   'app_client/loc8r-spa.js',
   'app_client/home/home.controller.js',
+  'app_client/about/about.controller.js',
   'app_client/common/services/geolocation.service.js',
   'app_client/common/services/loc8rData.service.js',
   'app_client/common/filters/formatDistance.filter.js',
