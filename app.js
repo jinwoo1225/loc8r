@@ -26,7 +26,8 @@ const appClientFiles = [
   'app_client/common/filters/formatDistance.filter.js',
   'app_client/common/directives/ratingStars/ratingStars.directive.js',
   'app_client/common/directives/footerGeneric/footerGeneric.directive.js',
-  'app_client/common/directives/navigation/navigation.directive.js'
+  'app_client/common/directives/navigation/navigation.directive.js',
+  'app_client/common/directives/pageHeader/pageHeader.directive.js'
 ];
 
 const appClientCode = {};
