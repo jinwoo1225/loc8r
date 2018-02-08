@@ -11,6 +11,11 @@
         controller: 'aboutCtrl',
         controllerAs: 'vm'
       })
+      .when('/location/:locationId', {
+        templateUrl: 'locationDetail/locationDetail.view.html',
+        controller: 'locationDetailCtrl',
+        controllerAs: 'vm'
+      })
       .otherwise({redirectTo: '/'});
 
     $locationProvider.html5Mode({
