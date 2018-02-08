@@ -20,6 +20,6 @@
   };
 
   angular
-    .module('loc8r', ['ngRoute'])
+    .module('loc8r', ['ngRoute', 'ngSanitize'])
     .config(['$routeProvider', '$locationProvider', config]);
 })();
