@@ -1,13 +1,16 @@
 (function () {
-  var locationDetailCtrl = function ($routeParams) {
+  var locationDetailCtrl = function ($routeParams, loc8rData) {
     var vm = this;
 
-    vm.pageHeader = {
-      title: $routeParams.locationId
-    };
+    loc8rData.locationById($routeParams.locationId).then(function (response) {
+      vm.data = { location: response.data };
+      vm.pageHeader = { title: vm.data.location.name };
+    }, function (err) {
+      console.log(err);
+    });
   };
 
-  locationDetailCtrl.$inject = ['$routeParams'];
+  locationDetailCtrl.$inject = ['$routeParams', 'loc8rData'];
 
   angular
     .module('loc8r')
