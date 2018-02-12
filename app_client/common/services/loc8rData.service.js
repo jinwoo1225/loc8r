@@ -3,6 +3,9 @@
     return {
       locationByCoords: function (lat, lng) {
         return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=25');
+      },
+      locationById: function (locationId) {
+        return $http.get('/api/locations/' + locationId);
       }
     };
   };
