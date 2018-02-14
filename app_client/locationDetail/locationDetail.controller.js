@@ -1,5 +1,5 @@
 (function () {
-  var locationDetailCtrl = function ($routeParams, loc8rData) {
+  var locationDetailCtrl = function ($routeParams, $uibModal, loc8rData) {
     var vm = this;
 
     loc8rData.locationById($routeParams.locationId).then(function (response) {
@@ -8,9 +8,16 @@
     }, function (err) {
       console.log(err);
     });
+
+    vm.popUpReviewForm = function () {
+      var modalInstance = $uibModal.open({
+        templateUrl: '/reviewModal/reviewModal.view.html',
+        controller: 'reviewModalCtrl as vm'
+      });
+    };
   };
 
-  locationDetailCtrl.$inject = ['$routeParams', 'loc8rData'];
+  locationDetailCtrl.$inject = ['$routeParams', '$uibModal', 'loc8rData'];
 
   angular
     .module('loc8r')
