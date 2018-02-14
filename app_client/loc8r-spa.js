@@ -25,6 +25,6 @@
   };
 
   angular
-    .module('loc8r', ['ngRoute', 'ngSanitize'])
+    .module('loc8r', ['ngRoute', 'ngSanitize', 'ui.bootstrap'])
     .config(['$routeProvider', '$locationProvider', config]);
 })();
