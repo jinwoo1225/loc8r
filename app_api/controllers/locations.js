@@ -1,33 +1,13 @@
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
 
-// vvv This stuff is now irrelevant
-
-/*
-const theEarth = (function () {
-  const earthRadius = 6371; // km
-
-  const getDistanceFromRads = function (rads) {
-    return parseFloat(rads * earthRadius);
-  };
-  
-  const getRadsFromDistance = function (distance) {
-    return parseFloat(distance / earthRadius);
-  };
-
-  return {
-    getDistanceFromRads: getDistanceFromRads,
-    getRadsFromDistance: getRadsFromDistance
-  };
-})(); */
-
-// allow up to seven opening times for each day of the week
+// Allow up to seven opening times for each day of the week
 const getOpeningTimes = function (body) {
   const openingTimes = [];
 
   for (let i = 0; i < 7; i++) {
     if (body['days' + i] && body['closed' + i]) {
-      // undefined opening and closing when site is closed is not an issue
+      // Undefined opening and closing when site is closed is not an issue
       openingTimes.push({
         days: body['days' + i],
         opening: body['opening' + i],
@@ -43,15 +23,10 @@ const getOpeningTimes = function (body) {
 module.exports.locationsByDistance = function (req, res) {
   const lng = parseFloat(req.query.lng);
   const lat = parseFloat(req.query.lat);
-  const maxDistance = parseFloat(req.query.maxDistance);
+  const maxDistance = parseFloat(req.query.maxDistance) * 1000; // Convert km to m
   const point = {
     type: 'Point',
     coordinates: [lng, lat],
-  };
-  const geoOptions = {
-    spherical: true,
-    num: 10,
-    maxDistance: maxDistance * 1000 // convert km to m
   };
 
   if ((!lng && lng !== 0) || (!lat && lat !== 0)) {
@@ -60,28 +35,36 @@ module.exports.locationsByDistance = function (req, res) {
     return;
   }
 
-  Location.geoNear(point, geoOptions, function (err, results, stats) {
-    const locations = [];
+  Location.aggregate(
+    [{'$geoNear': {
+      'near': point,
+      'spherical': true,
+      'distanceField': 'dist.calculated',
+      'maxDistance': maxDistance}}],
+    function(err, results) {
+      const locations = [];
 
-    if (err) {
-      res.status(404);
-      res.json(err);
-    } else {
-      results.forEach(function (doc) {
-        locations.push({
-          distance: doc.dis / 1000, // convert m back to km
-          name: doc.obj.name,
-          address: doc.obj.address,
-          rating: doc.obj.rating,
-          facilities: doc.obj.facilities,
-          _id: doc.obj._id
+      if (err) {
+        sendJSONresponse(res, 404, err);
+      } else {
+        results.forEach(function (doc) {
+          console.log(doc);
+
+          locations.push({
+            distance: doc.dis / 1000, // Convert m back to km
+            name: doc.name,
+            address: doc.address,
+            rating: doc.rating,
+            facilities: doc.facilities,
+            _id: doc._id
+          });
         });
-      });
       
-      res.status(200);
-      res.json(locations);
+        res.status(200);
+        res.json(locations);
+      }
     }
-  });
+  );
 };
 
 module.exports.createLocation = function (req, res) {
