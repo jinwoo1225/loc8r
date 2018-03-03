@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 
 const dbURI = 'mongodb://loc8r:fugger-express@localhost/loc8r?authSource=loc8r';
 
-mongoose.connect(dbURI, {
-  useMongoClient: true
-});
+mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function () {
   console.log('Mongoose connected');
