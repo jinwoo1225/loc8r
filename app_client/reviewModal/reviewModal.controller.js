@@ -38,7 +38,11 @@
     };
   };
 
+<<<<<<< HEAD
   reviewModalCtrl.$inject = ['$uibModalInstance', 'loc8rData', 'locationData'];
+=======
+  reviewModalCtrl.$inject = ['$uibModalInstance', 'locationData'];
+>>>>>>> cb13fa7... Using locationData service in app_client controller reviewModal
 
   angular
     .module('loc8r')
