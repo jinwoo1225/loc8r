@@ -48,8 +48,6 @@ module.exports.locationsByDistance = function (req, res) {
         sendJSONresponse(res, 404, err);
       } else {
         results.forEach(function (doc) {
-          console.log(doc);
-
           locations.push({
             distance: doc.dis / 1000, // Convert m back to km
             name: doc.name,
