@@ -2,6 +2,8 @@
   var locationDetailCtrl = function ($routeParams, $uibModal, loc8rData) {
     var vm = this;
 
+    vm.locationId = $routeParams.locationId;
+
     loc8rData.locationById($routeParams.locationId).then(function (response) {
       vm.data = { location: response.data };
       vm.pageHeader = { title: vm.data.location.name };
