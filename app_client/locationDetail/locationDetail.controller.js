@@ -14,7 +14,15 @@
     vm.popUpReviewForm = function () {
       var modalInstance = $uibModal.open({
         templateUrl: '/reviewModal/reviewModal.view.html',
-        controller: 'reviewModalCtrl as vm'
+        controller: 'reviewModalCtrl as vm',
+        resolve: {
+          locationData: function () {
+            return {
+              locationId: vm.locationId,
+              locationName: vm.data.location.name
+            };
+          }
+        }
       });
     };
   };
