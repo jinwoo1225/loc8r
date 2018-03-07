@@ -1,5 +1,5 @@
 <div class="modal-content">
-  <form id="addReview" name="addReview" role="form" class="form-horizontal">
+  <form id="addReview" name="addReview" role="form" data-on-submit="vm.onSubmit()" class="form-horizontal">
     <div class="modal-header">
       <button type="button" data-ng-click="vm.modal.cancel()" class="close">
         <span aria-hidden="true">×</span>
@@ -8,6 +8,7 @@
       <h4 id="modalTitle" class="modal-title">Add Your Review for {{vm.locationData.locationName}}</h4>
     </div>
     <div class="modal-body">
+      <div role="alert" data-ng-show="vm.formError" class="alert alert-danger">{{vm.formError}}</div>
       <div class="form-group">
         <div class="row">
           <div class="col-xs-2">
