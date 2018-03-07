@@ -6,6 +6,9 @@
       },
       locationById: function (locationId) {
         return $http.get('/api/locations/' + locationId);
+      },
+      addReviewById: function (locationId, data) {
+        return $http.post('/api/locations/' + locationId + '/reviews', data);
       }
     };
   };
