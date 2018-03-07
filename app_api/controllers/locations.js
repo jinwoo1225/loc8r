@@ -49,7 +49,7 @@ module.exports.locationsByDistance = function (req, res) {
       } else {
         results.forEach(function (doc) {
           locations.push({
-            distance: doc.dis / 1000, // Convert m back to km
+            distance: doc.dist.calculated / 1000, // Convert m back to km
             name: doc.name,
             address: doc.address,
             rating: doc.rating,
