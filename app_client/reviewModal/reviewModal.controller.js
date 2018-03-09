@@ -8,6 +8,9 @@
     vm.modal = {
       cancel: function () {
         $uibModalInstance.dismiss('cancel');
+      },
+      close: function (data) {
+        $uibModalInstance.close(data);
       }
     };
     vm.addReview = function (locationData, formData) {
@@ -16,7 +19,7 @@
         rating: formData.rating,
         reviewText: formData.reviewText
       }).then(function (data) {
-        console.log('Review submitted successfully');
+        vm.modal.close(data);
       }, function (err) {
         vm.formError = 'Your review has not been saved; try again';
       });
