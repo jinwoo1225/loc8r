@@ -37,7 +37,7 @@
       }
     };
     vm.addReview = function (locationData, formData) {
-      loc8rData.addReviewById(locationId, {
+      loc8rData.addReviewById(vm.locationData.locationId, {
         author: formData.name,
         rating: formData.rating,
         reviewText: formData.reviewText
@@ -61,11 +61,7 @@
     };
   };
 
-<<<<<<< HEAD
   reviewModalCtrl.$inject = ['$uibModalInstance', 'loc8rData', 'locationData'];
-=======
-  reviewModalCtrl.$inject = ['$uibModalInstance', 'locationData'];
->>>>>>> cb13fa7... Using locationData service in app_client controller reviewModal
 
   angular
     .module('loc8r')
