@@ -24,6 +24,10 @@
           }
         }
       });
+
+      modalInstance.result.then(function (response) {
+        vm.data.location.reviews.push(response.data);
+      });
     };
   };
 
