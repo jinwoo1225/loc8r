@@ -11,7 +11,7 @@
       }
     };
     vm.addReview = function (locationData, formData) {
-      loc8rData.addReviewById(locationId, {
+      loc8rData.addReviewById(vm.locationData.locationId, {
         author: formData.name,
         rating: formData.rating,
         reviewText: formData.reviewText
@@ -35,7 +35,7 @@
     };
   };
 
-  reviewModalCtrl.$inject = ['$uibModalInstance', 'locationData'];
+  reviewModalCtrl.$inject = ['$uibModalInstance', 'loc8rData', 'locationData'];
 
   angular
     .module('loc8r')
