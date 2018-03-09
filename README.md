@@ -28,8 +28,8 @@ you don't like "fugger-express" then use something else, but be aware that you w
 have to change `app_api/models/db.js` accordingly.
 
 Then restore the contents of the database, which have been provided here in
-directory `mongodump`. The restoration process goes something like so (here I
-have administrative authorization set up):
+directory `mongodump`. The restoration process goes like so, if you followed my
+earlier instructions:
 
 ```bash
 mongorestore -h localhost -d loc8r -u admin -p --authenticationDatabase admin mongodump/
