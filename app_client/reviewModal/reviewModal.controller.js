@@ -42,7 +42,7 @@
         rating: formData.rating,
         reviewText: formData.reviewText
       }).then(function (data) {
-        console.log('Review submitted successfully');
+        vm.modal.close(data);
       }, function (err) {
         vm.formError = 'Your review has not been saved; try again';
       });
