@@ -24,15 +24,15 @@ Mongo shell, carry out the following commands:
 
 ```
 use loc8r
-db.createUser({user: 'loc8r', pwd: 'fugger-express', roles: ["readWrite", "dbAdmin"]});
+db.createUser({user: 'loc8r', pwd: 'yourPassword', roles: ["readWrite", "dbAdmin"]});
 ```
 
-That assumes you don't want to change the credentials I give to Mongoose
-herein. (Yes, I'm aware that my password is out in the open. No, I don't use it
-for anything else, so don't try anything funny. And yes, [Fugger-Express is
-real](http://i0.kym-cdn.com/photos/images/facebook/001/118/306/dc8.jpg).) If
-you don't like "fugger-express" then use something else, but be aware that you will
-have to change `app_api/models/db.js` accordingly.
+The password you have chosen needs to be included in the file `.env` in the
+project root, like so:
+
+```
+MONGODB_PASSWORD=yourPassword
+```
 
 Then restore the contents of the database, which have been provided here in
 directory `mongodump`. The restoration process goes like so, if you followed my
