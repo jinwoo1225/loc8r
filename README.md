@@ -42,6 +42,16 @@ earlier instructions:
 mongorestore -h localhost -d loc8r -u admin -p --authenticationDatabase admin mongodump/
 ```
 
+Now that the MongoDB database has been restored, there is one other thing that
+needs to be done, which is adding another variable to the aforementioned `.env`
+file that contains the password for the database user, another password of
+sorts for use by the jsonwebtoken module. The line will look something like
+this:
+
+```
+JWT_SECRET=jsonwebtokenPassword
+```
+
 After all of this is said and done, the next step is doing `npm install` to
 install all the Node.js modules. It should then be possible to start the app by
 doing `npm start` in the root directory.
