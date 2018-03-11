@@ -1,6 +1,13 @@
 # loc8r
 ## Example application from Getting MEAN with Mongo, Express, Angular and Node by Simon Holmes
 
+**(*Nota bene*: While I was doing a rebase to edit some old commits, the
+project history got messed up for reasons I don't really fathom. As only the
+most recent commit really matters and as I'm not sure any efforts I make to
+rectify the situation won't backfire, I'm going to leave this be for now. Any
+anomalies seen in the history should be assumed to be a product of the
+rebase.)**
+
 Earlier I was deploying this to Heroku. But the problem is that the Heroku
 add-on that supports MongoDB, mLab, uses MongoDB 3.x. The version that's
 supported on 32-bit Ubuntu is 2.x. These two can't talk to each other.
