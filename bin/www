@@ -1,9 +1,17 @@
 #!/usr/bin/nodejs
-var debug = require('debug')('my-application');
-var app = require('../app');
+const fs = require('fs');
+const https = require('https');
+const debug = require('debug')('my-application');
+const app = require('../app');
+
+const httpsOptions = {
+  key: fs.readFileSync('keys/key.pem', 'utf8'),
+  cert: fs.readFileSync('keys/server.crt', 'utf8')
+};
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+const server = https.createServer(httpsOptions, app);
+server.listen(app.get('port'), function () {
   debug('Express server listening on port ' + server.address().port);
 });
