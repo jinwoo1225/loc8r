@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const dbURI = 'mongodb://loc8r:fugger-express@localhost/loc8r?authSource=loc8r';
+const dbURI = `mongodb://loc8r:${process.env.MONGODB_PASSWORD}@localhost/loc8r?authSource=loc8r`;
 
 mongoose.connect(dbURI);
 
@@ -36,3 +36,4 @@ process.on('SIGTERM', function () {
 });
 
 require('./locations');
+require('./users');
