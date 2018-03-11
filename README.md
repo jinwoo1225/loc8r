@@ -38,6 +38,24 @@ mongorestore -h localhost -d loc8r -u admin -p --authenticationDatabase admin mo
 After all this is said and done, it should be possible to start the app by
 doing `npm start` in the root directory.
 
+As for accessing the site: as of this writing, I am on the final chapter of the
+book, which concerns user authentication. I wanted to run the application
+through HTTPS. I created the directory `keys` in the project and, in it, I
+carried out the following commands before altering the script `bin/www` to use
+an encrypted connection:
+
+```bash
+openssl req -newkey rsa:2048 -new -nodes -keyout key.pem -out csr.pem
+openssl x509 -req -days 36500 -in csr.pem -signkey key.pem -out server.crt
+```
+
+Accordingly, the (self-signed) certificate should be good for about one hundred
+years. (By 2118 or so, I expect that anything related to JavaScript will have
+long since faded away into total obsolescence.) Again, because the certificate
+is self-signed, it is necessary to store an exception in your browser. There is
+no cause for concern. Last but not least, the site can *only* be accessed
+through `https://localhost:3000`. The `https://` part *has* to be there.
+
 There is one other snag. The application developed in the book features
 geolocation. The locations in the database are all in the United Kingdom. I
 have decided to keep things that way rather than broadcast where I live on
