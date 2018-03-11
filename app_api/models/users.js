@@ -24,8 +24,6 @@ const pbkdf2SyncOptions = {
 userSchema.method.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength);
-
-  mongoose.model('User', userSchema);
 };
 
 userSchema.method.validPassword = function (password) {
