@@ -42,7 +42,8 @@ earlier instructions:
 mongorestore -h localhost -d loc8r -u admin -p --authenticationDatabase admin mongodump/
 ```
 
-After all this is said and done, it should be possible to start the app by
+After all of this is said and done, the next step is doing `npm install` to
+install all the Node.js modules. It should then be possible to start the app by
 doing `npm start` in the root directory.
 
 As for accessing the site: as of this writing, I am on the final chapter of the
