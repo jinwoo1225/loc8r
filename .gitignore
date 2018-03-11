@@ -1,2 +1,3 @@
 **/.backup
+node_modules
 public/angularjs/loc8r-spa.min.js
