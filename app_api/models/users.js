@@ -18,20 +18,21 @@ const userSchema = new mongoose.Schema({
 
 const pbkdf2SyncOptions = {
   iterations: 100000,
-  keyLength: 64
+  keyLength: 64,
+  digest: 'sha512'
 };
 
-userSchema.method.setPassword = function (password) {
+userSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength);
+  this.hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest);
 };
 
-userSchema.method.validPassword = function (password) {
-  const hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength);
+userSchema.methods.validPassword = function (password) {
+  const hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest);
   return hash === this.hash;
 };
 
-userSchema.method.generateJwt = function () {
+userSchema.methods.generateJwt = function () {
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
