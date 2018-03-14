@@ -23,12 +23,12 @@ const pbkdf2SyncOptions = {
 };
 
 userSchema.methods.setPassword = function (password) {
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest);
+  this.salt = crypto.randomBytes(16).toString('base64');
+  this.hash = crypto.pbkdf2Sync(password, new Buffer(this.salt, 'binary'), pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest).toString('base64');
 };
 
 userSchema.methods.validPassword = function (password) {
-  const hash = crypto.pbkdf2Sync(password, this.salt, pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest);
+  const hash = crypto.pbkdf2Sync(password, new Buffer(this.salt, 'binary'), pbkdf2SyncOptions.iterations, pbkdf2SyncOptions.keyLength, pbkdf2SyncOptions.digest).toString('base64');
   return hash === this.hash;
 };
 
