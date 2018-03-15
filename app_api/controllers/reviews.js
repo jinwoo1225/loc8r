@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
 
-const doAddReview = function (req, res, location) {
+const _createReview = function (req, res, location) {
   if (!location) {
     res.status(404);
     res.json({message: 'locationId not found'});
@@ -31,18 +31,7 @@ const doAddReview = function (req, res, location) {
   }
 };
 
-const updateAverageRating = function (locationId) {
-  Location
-    .findById(locationId)
-    .select('rating reviews')
-    .exec(function (err, location) {
-      if (!err) {
-        doSetAverageRating(location);
-      }
-    });
-};
-
-const doSetAverageRating = function (location) {
+const _updateAverageRating = function (location) {
   if (location.reviews && location.reviews.length > 0) {
     const reviewCount = location.reviews.length;
     let ratingTotal = 0;
@@ -64,6 +53,17 @@ const doSetAverageRating = function (location) {
   }
 };
 
+const updateAverageRating = function (locationId) {
+  Location
+    .findById(locationId)
+    .select('rating reviews')
+    .exec(function (err, location) {
+      if (!err) {
+        _updateAverageRating(location);
+      }
+    });
+};
+
 module.exports.createReview = function (req, res) {
   const locationId = req.params.locationId;
 
@@ -76,7 +76,7 @@ module.exports.createReview = function (req, res) {
           res.status(400);
           res.json(err);
         } else {
-          doAddReview(req, res, location);
+          _createReview(req, res, location);
         }
       });
   } else {
