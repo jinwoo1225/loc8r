@@ -103,4 +103,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// unauthorized error handler
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({message: `${err.name}: ${err.message}`});
+  }
+});
+
 module.exports = app;
