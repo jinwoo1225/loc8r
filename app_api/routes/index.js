@@ -7,7 +7,7 @@ const ctrlAuth = require('../controllers/authentication');
 
 const auth = expressJwt({
   secret: process.env.JWT_SECRET,
-  userProperty: 'payload'
+  requestProperty: 'payload'
 });
 
 router.get('/locations', ctrlLocations.locationsByDistance);
