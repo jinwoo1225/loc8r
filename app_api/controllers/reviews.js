@@ -1,13 +1,38 @@
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
+const User = mongoose.model('user');
 
-const _createReview = function (req, res, location) {
+const getAuthor = function (req, res, callback) {
+  if (req.payload && req.payload.email) {
+    User
+      .findOne({email: req.payload.email})
+      .exec(function (err, user) {
+        if (!user) {
+          res.status(404);
+          res.json({message: 'User not found'});
+          return;
+        } else if (err) {
+          console.log(err);
+          res.status(404);
+          res.json(err);
+          return;
+        }
+
+        callback(req, res, user.name);
+      });
+  } else {
+    res.status(404);
+    res.json({message: 'User not found'});
+  }
+};
+
+const _createReview = function (req, res, location, author) {
   if (!location) {
     res.status(404);
     res.json({message: 'locationId not found'});
   } else {
     location.reviews.push({
-      author: req.body.author,
+      author: author,
       rating: req.body.rating,
       reviewText: req.body.reviewText,
     });
@@ -65,24 +90,26 @@ const updateAverageRating = function (locationId) {
 };
 
 module.exports.createReview = function (req, res) {
-  const locationId = req.params.locationId;
+  getAuthor(req, res, function (req, res, username) {
+    const locationId = req.params.locationId;
 
-  if (locationId) {
-    Location
-      .findById(locationId)
-      .select('reviews')
-      .exec(function (err, location) {
-        if (err) {
-          res.status(400);
-          res.json(err);
-        } else {
-          _createReview(req, res, location);
-        }
-      });
-  } else {
-    res.status(404);
-    res.json({message: 'Not found; locationId required'});
-  }
+    if (locationId) {
+      Location
+        .findById(locationId)
+        .select('reviews')
+        .exec(function (err, location) {
+          if (err) {
+            res.status(400);
+            res.json(err);
+          } else {
+            _createReview(req, res, location, username);
+          }
+        });
+    } else {
+      res.status(404);
+      res.json({message: 'Not found; locationId required'});
+    }
+  });
 };
 
 module.exports.readReview = function (req, res) {
