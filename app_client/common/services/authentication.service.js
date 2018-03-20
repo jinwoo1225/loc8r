@@ -7,6 +7,17 @@
     var getToken = function () {
       return $window.localStorage['loc8rToken'];
     };
+    
+    var isLoggedIn = function () {
+      var token = getToken();
+
+      if (token) {
+        var payload = JSON.parse($window.atob(token.split('.')[1]));
+        return payload.exp > Date.now() / 1000;
+      } else {
+        return false;
+      }
+    };
 
     return {
       saveToken: saveToken,
@@ -24,16 +35,7 @@
       logout: function () {
         $window.localStorage.removeItem('loc8rToken');
       },
-      isLoggedIn: function () {
-        var token = getToken();
-
-        if (token) {
-          var payload = JSON.parse($window.atob(token.split('.')[1]));
-          return payload.exp > Date.now() / 1000;
-        } else {
-          return false;
-        }
-      },
+      isLoggedIn: isLoggedIn,
       currentUser: function () {
         if (isLoggedIn()) {
           var token = getToken();
