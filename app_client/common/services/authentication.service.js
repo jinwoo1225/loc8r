@@ -1,5 +1,5 @@
 (function () {
-  var authentication = function ($window) {
+  var authentication = function ($http, $window) {
     var saveToken = function (token) {
         $window.localStorage['loc8rToken'] = token;
     };
@@ -50,7 +50,7 @@
     };
   };
 
-  authentication.$inject = ['$window'];
+  authentication.$inject = ['$http', '$window'];
 
   angular
     .module('loc8r')
