@@ -6,7 +6,7 @@ $(document).ready(function () {
       if ($('.alert.alert-danger').length) {
         $('.alert.alert-danger').show();
       } else {
-        $(this).prepend('<div role="alert" class="alert alert-danger">All fields required; please try again</div>');
+        $(this).prepend('<div role="alert" class="alert alert-danger">All fields are required; please try again</div>');
       }
 
       return false;

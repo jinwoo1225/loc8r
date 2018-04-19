@@ -5,7 +5,7 @@ const User = mongoose.model('User');
 module.exports.register = function (req, res) {
   if (!req.body.name || !req.body.email || !req.body.password) {
     res.status(400);
-    res.json({message: 'All fields required'});
+    res.json({message: 'All are fields required'});
     return;
   }
 
@@ -32,7 +32,7 @@ module.exports.register = function (req, res) {
 module.exports.login = function (req, res) {
   if (!req.body.email || !req.body.password) {
     res.status(400);
-    res.json({message: 'All fields required'});
+    res.json({message: 'All are fields required'});
     return;
   }
 
