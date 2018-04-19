@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
-const User = mongoose.model('user');
+const User = mongoose.model('User');
 
 const getAuthor = function (req, res, callback) {
   if (req.payload && req.payload.email) {
