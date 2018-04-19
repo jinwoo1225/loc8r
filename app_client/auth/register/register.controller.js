@@ -31,7 +31,7 @@
         .then(function() {
           $location.search('page', null); 
           $location.path(vm.returnPage);
-        }, function(err) {
+        }, function (err) {
           vm.formError = err;
         });
     };
