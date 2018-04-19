@@ -1,8 +1,4 @@
 (function () {
-  angular
-    .module('loc8r')
-    .controller('registerCtrl', registerCtrl);
-
   var registerCtrl = function ($location, authentication) {
     var vm = this;
 
@@ -42,4 +38,8 @@
   };
 
   registerCtrl.$inject = ['$location', 'authentication'];
+
+  angular
+    .module('loc8r')
+    .controller('registerCtrl', registerCtrl);
 })();
