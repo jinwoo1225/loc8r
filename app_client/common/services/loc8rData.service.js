@@ -8,8 +8,10 @@
         return $http.get('/api/locations/' + locationId);
       },
       addReviewById: function (locationId, data) {
-        return $http.post('/api/locations/' + locationId + '/reviews', data, headers: {
-          Authorization: 'Bearer ' + authentication.getToken()
+        return $http.post('/api/locations/' + locationId + '/reviews', data, {
+          headers: {
+            Authorization: 'Bearer ' + authentication.getToken()
+          }
         });
       }
     };
