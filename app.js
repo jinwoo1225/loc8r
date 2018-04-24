@@ -39,7 +39,8 @@ const appClientFiles = [
   'app_client/common/directives/navigation/navigation.directive.js',
   'app_client/common/directives/pageHeader/pageHeader.directive.js',
   'app_client/auth/register/register.controller.js',
-  'app_client/auth/login/login.controller.js'
+  'app_client/auth/login/login.controller.js',
+  'app_client/common/directives/navigation/navigation.controller.js'
 ];
 
 const appClientCode = {};
