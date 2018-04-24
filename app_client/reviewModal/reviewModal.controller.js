@@ -15,7 +15,6 @@
     };
     vm.addReview = function (locationData, formData) {
       loc8rData.addReviewById(vm.locationData.locationId, {
-        author: formData.name,
         rating: formData.rating,
         reviewText: formData.reviewText
       }).then(function (data) {
@@ -29,7 +28,7 @@
     vm.onSubmit = function () {
       vm.formError = ''; // reset any existing error message
 
-      if (!vm.formData.name || !vm.formData.rating || !vm.formData.reviewText) {
+      if (!vm.formData.rating || !vm.formData.reviewText) {
         vm.formError = 'All fields are required; please try again';
         return false;
       } else {
